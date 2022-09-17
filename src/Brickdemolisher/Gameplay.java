@@ -12,7 +12,7 @@ import javax.swing.Timer;
 public class Gameplay extends JPanel implements KeyListener, ActionListener{
     // this is added so when the program is running, it will not play automatically
     private boolean play = false;
-    
+    // hellooo
     private int score = 0;
     private final int totalBrick = 21;
     
