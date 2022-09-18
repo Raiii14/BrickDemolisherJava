@@ -10,21 +10,21 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.Timer;
 public class Gameplay extends JPanel implements KeyListener, ActionListener{
-    // this is added so when the program is running, it will not play automatically
     private boolean play = false;
-    // hellooo
+    // this is added so when the program is running, it will not play automatically
+
     private int score = 0;
     private final int totalBrick = 21;
     
     private Timer timer;
-    private final int delay = 8;
+    private int delay = 8;
     
     private int playerX = 310;
     // The position and the direction of the ball
-    private final int ballposX = 120;
-    private final int ballposY = 350;
-    private final int ballXdir = -1;
-    private final int ballYdir = -2;
+    private int ballposX = 120;
+    private int ballposY = 350;
+    private int ballXdir = -1;
+    private int ballYdir = -2;
     
     public Gameplay() {
         addKeyListener(this);
@@ -48,13 +48,15 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
         
         // insert the ball
         
+        
+        
         g.dispose();
     }
 
         @Override
     public void actionPerformed(ActionEvent e) {
+        repaint(); // !! Dont move this code  !!
         // calling the paint method again
-        repaint();
         
         timer.start();
     }
