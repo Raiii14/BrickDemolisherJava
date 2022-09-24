@@ -3,6 +3,7 @@ package Brickdemolisher;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import javax.swing.JPanel;    
 // These 4 imports are for the controls
@@ -19,23 +20,22 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
     private final int totalBrick = 21;
     
     private Timer timer;
-    private int delay = 8;
+    private int speed = 8;
     
     private int playerX = 310;
     // The position and the direction of the ball
-    private int ballposX = 120;
+    private int ballposX = 350;
     private int ballposY = 350;
-    private int ballXdir = -1;
-    private int ballYdir = -2;
+    private int ballXdir = 3;
+    private int ballYdir = -5;
     
-    private MapGenerator map;
-    Image img = Toolkit.getDefaultToolkit().createImage("/Users/johnm/Downloads/Mario.jpg");
+    Image img = Toolkit.getDefaultToolkit().createImage("/Users/Acer/Downloads/Background.jpg");
     
     public Gameplay() {
         addKeyListener(this);
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
-        timer = new Timer(delay, this);
+        timer = new Timer(speed, this);
         timer.start();
     }
     
@@ -65,10 +65,25 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
 
         @Override
     public void actionPerformed(ActionEvent e) {
-        repaint(); // !! Dont move this code  !!
-        // calling the paint method again
-        
         timer.start();
+        if(play) {
+            if(new Rectangle(ballposX, ballposY, 20, 20).intersects(new Rectangle(playerX,550, 100, 8))) {
+                ballYdir = -ballYdir;
+            }
+            ballposX  += ballXdir;
+            ballposY += ballYdir;
+            if(ballposX < 0) {
+                ballXdir = -ballXdir;
+            }
+            if(ballposY < 0) {
+                ballYdir =  -ballYdir;
+            }
+            if(ballposX > 670) {
+                ballXdir = -ballXdir;
+            }
+        }
+        
+        repaint(); // calling the paint method again
     }
     
     @Override
@@ -80,8 +95,8 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
     @Override
     public void keyPressed(KeyEvent e) {
         if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            if(playerX >= 600) {
-                playerX = 600;
+            if(playerX >= 595) {
+                playerX = 595;
             } else {
                 moveRight();
             }
@@ -96,16 +111,10 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
     }
     public void moveRight() {
         play = true;
-        playerX += 20;
+        playerX += 20; // the speed of the paddle going right
     }
     public void moveLeft() {
         play = true;
-        playerX -= 20;
-    }
-
-    private static class MapGenerator {
-
-        public MapGenerator() {
-        }
+        playerX -= 20; // the speed of the paddle going left
     }
 }
