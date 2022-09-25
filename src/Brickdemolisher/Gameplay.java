@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Random;
 import javax.swing.Timer;
 public class Gameplay extends JPanel implements KeyListener, ActionListener{
     private boolean play = false;
@@ -22,13 +23,15 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
     private int totalBricks = 21;
     
     private Timer timer;
-    private int speed = 8;
+    private int speed = 1;
     
     private int playerX = 310;
     // The position and the direction of the ball
     private int ballposX = 350;
     private int ballposY = 350;
-    private int ballXdir = 2;
+    Random random = new Random();
+    // int x = random.nextInt(5+3)-5;
+    private int ballXdir = 3;
     private int ballYdir = -5;
     
     private MapGenerator map;
@@ -175,7 +178,9 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
                 play = false;
                 ballposX = 350;
                 ballposY = 350;
-                ballXdir = 2;
+                Random rand = new Random();
+                // int x1 = rand.nextInt(5+3)-4;
+                ballXdir = 3;
                 ballYdir = -5;
                 playerX = 310;
                 score = 0;
