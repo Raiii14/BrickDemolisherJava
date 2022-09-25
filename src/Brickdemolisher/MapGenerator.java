@@ -13,7 +13,7 @@ public class MapGenerator {
                 map[i][j] = 1;
             }
         }
-        brickWidth = 540/col;
+        brickWidth = 540/col; // more bricks
         brickHeight = 150/row;
     }
     public void draw(Graphics2D g) {
@@ -23,7 +23,7 @@ public class MapGenerator {
                     g.setColor(Color.white);
                     g.fillRect(j * brickWidth + 80, i * brickHeight + 50, brickWidth, brickHeight);
                     
-                    g.setStroke(new BasicStroke(3));
+                    g.setStroke(new BasicStroke(4)); // the border between bricks
                     g.setColor(Color.black);
                     g.drawRect(j * brickWidth + 80, i * brickHeight + 50, brickWidth, brickHeight);
                 }

@@ -1,5 +1,5 @@
 package Brickdemolisher;
-// I imported that is needed for graphics and the JPanel which is the frame of the app
+// These imports are needed for graphics and the JPanel which is the frame of the app
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -103,7 +103,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
         timer.start();
         if(play) {
             if(new Rectangle(ballposX, ballposY, 20, 20).intersects(new Rectangle(playerX,550, 100, 8))) {
-                ballYdir = -ballYdir;
+                ballYdir = -ballYdir; // this code is to make the ball can touch the paddle and bounce back
             }
             A: for(int i = 0; i< map.map.length; i++) {
                 for(int j = 0; j< map.map[0].length; j++) {
@@ -116,8 +116,8 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
                         Rectangle ballRect = new Rectangle(ballposX, ballposY, 20, 20);
                         Rectangle brickRect = rect;
                         
-                        if(ballRect.intersects(brickRect)) {
-                            map.setBrickValue(0, i, j);
+                        if(ballRect.intersects(brickRect)) { // to make the ball touch the brick
+                            map.setBrickValue(0, i, j); // 0 to remove bricks when hit by the ball
                             totalBricks--;
                             score += 5;
                             
@@ -188,10 +188,10 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
     }
     public void moveRight() {
         play = true;
-        playerX += 30; // the speed of the paddle going right
+        playerX += 34; // the speed of the paddle going right
     }
     public void moveLeft() {
         play = true;
-        playerX -= 30; // the speed of the paddle going left
+        playerX -= 34; // the speed of the paddle going left
     }
 }
