@@ -172,7 +172,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
         }
         if(e.getKeyCode() == KeyEvent.VK_SPACE) {
             if(!play) {
-                play = true;
+                play = false;
                 ballposX = 350;
                 ballposY = 350;
                 ballXdir = 2;
