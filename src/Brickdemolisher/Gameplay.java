@@ -90,7 +90,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
             ballYdir = 0;
             g.setColor(Color.white);
             g.setFont(new Font("sansserif", Font.BOLD, 30));
-            g.drawString("You Won! Your Score is ", 190, 300);
+            g.drawString("You Won! Your Score is " + score, 167, 300);
 
             g.setFont(new Font("sansserif", Font.BOLD, 20));
             g.drawString("Press Space To Restart", 250, 350);
