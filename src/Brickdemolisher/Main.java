@@ -4,7 +4,7 @@ public class Main {
     public static void main(String[] args) {
         JFrame obj = new JFrame();
         Gameplay gamePlay = new Gameplay();
-        obj.setBounds(10, 10, 722, 600);
+        obj.setBounds(10, 10, 722, 650);
         obj.setTitle("Brick Demolisher");
         obj.setResizable(false);
         obj.setVisible(true);
