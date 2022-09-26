@@ -43,7 +43,6 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
     Rectangle rect;
     Rectangle ballRect;
     Rectangle brickRect;
-    int inter;
     
     private MapGenerator map;
     Image img = Toolkit.getDefaultToolkit().createImage("/Users/Acer/Downloads/Background.jpg");
