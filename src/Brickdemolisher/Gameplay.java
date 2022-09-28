@@ -1,5 +1,5 @@
 package Brickdemolisher;
-// These imports are needed for graphics and the JPanel which is the frame of the app
+// These imports are needed for graphics and the JPanel for the Gameplay class to use
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -13,9 +13,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.Random;
 import javax.swing.Timer;
-public class Gameplay extends JPanel implements KeyListener, ActionListener{
+public class Gameplay extends JPanel implements KeyListener, ActionListener {
     private boolean play = false;
     // this is added so when the game is ran, it will not play automatically
 
@@ -29,7 +28,6 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
     // The position and the direction of the ball
     private int ballposX = 350;
     private int ballposY = 350;
-    Random random = new Random();
     private int ballXdir = -2;
     private int ballYdir = -4;
     
@@ -58,14 +56,11 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
         g.fillRect(1,1, 692, 700);
         g.drawImage(img,40,40,null);
         
-        // creating
-        map.draw((Graphics2D)g);
-        
         // the border
         g.setColor(Color.black);
         g.fillRect(0, 0, 1, 620);
         g.fillRect(0, 0, 692, 5);
-        g.fillRect(692, 0, 14, 40);
+        g.fillRect(692, 0, 14, 620);
         
         // the paddle
         g.setColor(Color.white);
@@ -88,7 +83,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
         
         // the score
         g.setColor(Color.white);
-        g.setFont(new Font("SansSerif", Font.BOLD, 23));
+        g.setFont(new Font("sansserif", Font.BOLD, 23));
         g.drawString(" " + score, 650, 29);
         if(ballposY > 570) {
             play = false;
@@ -113,6 +108,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
             g.setFont(new Font("sansserif", Font.BOLD, 20));
             g.drawString("Press 1, 2, or 3 to Restart", 250, 350);
         }
+        map.draw((Graphics2D)g);
         g.dispose();
     }
 
@@ -189,7 +185,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
             }
         }
         // Difficulties
-        if(e.getKeyCode() == KeyEvent.VK_1) { // Default, Normal difficulty
+        if(e.getKeyCode() == KeyEvent.VK_1) { // Restart, and Default/Normal difficulty
             if(!play) {
                 play = false;
                 map = new MapGenerator(3, 7);
