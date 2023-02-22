@@ -21,7 +21,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
     // this is added so when the game is ran, it will not play automatically
 
     private int score = 0;
-    private int totalBricks = 21;
+    private int totalBricks = 63;
     
     private Timer timer;
     private double speed = 1;
@@ -192,7 +192,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
                 ballposY = 350;
                 playerX = 310;
                 score = 0;
-                totalBricks = 21;
+                totalBricks = 63;
                 ballXdir = -2;
                 ballYdir = -4;
                 diff = "Normal";
@@ -207,7 +207,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
                 ballposY = 350;
                 playerX = 310;
                 score = 0;
-                totalBricks = 21;
+                totalBricks = 63;
                 ballXdir = 5;
                 ballYdir = -7;
                 diff = "Hard";
@@ -222,7 +222,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
                 ballposY = 350;
                 playerX = 310;
                 score = 0;
-                totalBricks = 21;
+                totalBricks = 63;
                 ballXdir = 7;
                 ballYdir = -9;
                 diff = "Difficult";
