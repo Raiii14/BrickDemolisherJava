@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import javax.swing.ImageIcon;
 import javax.swing.Timer;
 
 public class Gameplay extends JPanel implements KeyListener, ActionListener {
@@ -39,7 +40,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
     
     private MapGenerator map;
     
-    Image img = Toolkit.getDefaultToolkit().createImage("/Users/Acer/Downloads/Background.jpg");
+    Image img = Toolkit.getDefaultToolkit().createImage("Brickpic/bg1.png");
     
     public Gameplay() {
         map = new MapGenerator(3, 7);
@@ -53,24 +54,21 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
     @Override
     public void paint(Graphics g) {
         // the background
-        g.setColor(Color.black);
-        g.fillRect(1,1, 692, 700);
-        g.drawImage(img,40,40,null);
+        g.drawImage(img, 0, 0, 1033, 660, 0, 0, 1500, 1200, null);
         
         // the border
-        g.setColor(Color.black);
+        /*g.setColor(Color.black);
         g.fillRect(0, 0, 1, 620);
         g.fillRect(0, 0, 692, 5);
-        g.fillRect(692, 0, 14, 620);
+        g.fillRect(672, 0, 50, 620);*/
         
         // the paddle
-        g.setColor(Color.white);
+        g.setColor(new Color(50, 200, 255));
         g.fillRect(playerX, 545, 115, 10);
         
         // the ball
-        g.setColor(Color.white);
+        g.setColor(new Color(50, 200, 255));
         g.fillOval(ballposX,ballposY,20,20);
-        
         
         // difficulty
         g.setFont(new Font("courier", Font.BOLD, 20));
