@@ -202,6 +202,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
             } 
             catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, ex);
+                System.exit(0);
             }
         }
         
