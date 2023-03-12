@@ -85,7 +85,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
         
         g.setFont(new Font("courier", Font.BOLD, 16));
         g.setColor(Color.white);
-        g.drawString("1 - Normal      2 - Hard      3 - Difficult", 230, 27);
+        //g.drawString("1 - Normal      2 - Hard      3 - Difficult", 230, 27);
         
         // the score
         g.setColor(Color.white);
@@ -172,7 +172,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
             }
         }
         if(ballposY > 570 || totalBricks <= 0) {
-            String addhighscore = "UPDATE brickplayerinfo SET highscore = ? WHERE username = '"+currentact+"'";
+            String addhighscore = "UPDATE brickplayerinfo SET highscore = ? currentscore = ? WHERE username = '"+currentact+"'";
             String addscore = "UPDATE brickplayerinfo SET currentscore = ? WHERE username = '"+currentact+"'";
             String checkhscore = "SELECT highscore FROM brickplayerinfo WHERE username = '"+currentact+"'";
             try {
@@ -185,6 +185,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
                     if(highscore <= score) { // adding the score if the recent score is higher than their previous high score
                         ps = con.prepareStatement(addhighscore);
                         ps.setInt(1, score);
+                        ps.setInt(2, score);
                         ps.executeUpdate();
                         
                     } else { // if the recent score is lower than the high score
