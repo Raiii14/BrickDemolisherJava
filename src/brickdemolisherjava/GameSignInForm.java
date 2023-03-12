@@ -30,7 +30,7 @@ public class GameSignInForm extends javax.swing.JFrame {
         email = new javax.swing.JTextField();
         password = new javax.swing.JPasswordField();
         jLabel7 = new javax.swing.JLabel();
-        password1 = new javax.swing.JPasswordField();
+        confirmpass = new javax.swing.JPasswordField();
 
         jLabel6.setText("jLabel6");
 
@@ -58,6 +58,12 @@ public class GameSignInForm extends javax.swing.JFrame {
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel7.setText("Confirm Password:");
 
+        confirmpass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                confirmpassActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -80,7 +86,7 @@ public class GameSignInForm extends javax.swing.JFrame {
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(password1)
+                                    .addComponent(confirmpass)
                                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE))
                                 .addGap(0, 17, Short.MAX_VALUE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -107,7 +113,7 @@ public class GameSignInForm extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(password1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(confirmpass, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
@@ -130,21 +136,48 @@ public class GameSignInForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String login = "INSERT INTO BRICKPLAYERINFO (username, email, password) VALUES (?, ?, ?)";
+        String signin = "INSERT INTO BRICKPLAYERINFO (username, email, password) VALUES (?, ?, ?)";
+        String checkuser = "SELECT * FROM BRICKPLAYERINFO WHERE USERNAME = ?";
         try {
-            ps = con.prepareStatement(login);
+            ps = con.prepareStatement(checkuser);
             ps.setString(1, username.getText());
-            ps.setString(2, email.getText());
-            ps.setString(3, password.getText());
-            ps.executeUpdate();
+            rs = ps.executeQuery();
             
-            JOptionPane.showMessageDialog(null, "Sign Up Successful!");
-            dispose();
-            new GameLogInForm().setVisible(true);
+            if(rs.next()) {
+                // code that checks if the input already exists in the database, sign in will fail
+                JOptionPane.showMessageDialog(null, "Username already exists! Try another username.");
+            }
+            else if(username.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Insert a Username!");
+            }
+            else if(email.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Insert an Email!");
+            }
+            else if(password.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Insert a Password!");
+            }
+            else if(password.getText() != confirmpass.getText()) {
+                JOptionPane.showMessageDialog(null, "Check your Password again if it is the same!");
+            }
+            else {
+                ps = con.prepareStatement(signin);
+                ps.setString(1, username.getText());
+                ps.setString(2, email.getText());
+                ps.setString(3, password.getText());
+                ps.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Sign In Successful!");
+                dispose();
+                new GameLogInForm().setVisible(true);
+            }
+            
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void confirmpassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmpassActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_confirmpassActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -179,6 +212,7 @@ public class GameSignInForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPasswordField confirmpass;
     private javax.swing.JTextField email;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
@@ -189,7 +223,6 @@ public class GameSignInForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField password;
-    private javax.swing.JPasswordField password1;
     private javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables
 }

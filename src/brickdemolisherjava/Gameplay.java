@@ -15,6 +15,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
 public class Gameplay extends JPanel implements KeyListener, ActionListener {
@@ -41,6 +46,12 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
     
     private MapGenerator map;
     
+    int highscore;
+    String currentact = GameLogInForm.currentact;
+    Connection con= ConnectionForms.connectdb();
+    PreparedStatement ps=null;
+    ResultSet rs=null;
+    
     Image img = Toolkit.getDefaultToolkit().createImage("Bdpics/bg1.png");
     
     public Gameplay() {
@@ -50,6 +61,8 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
         setFocusTraversalKeysEnabled(false);
         timer = new Timer((int) speed, this);
         timer.start();
+        
+        ConnectionForms.connectdb();
     }
     
     @Override
@@ -126,8 +139,15 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
                         if(ballRect.intersects(brickRect)) { // this can make the ball hit the brick
                             map.setBrickValue(0, i, j); // when hit, removes a brick that are hit by the ball
                             totalBricks--;
-                            score += 10;
-                            
+                            if(diff == "Difficult") {
+                                score += 30;
+                            }
+                            else if(diff == "Hard") {
+                                score += 20;
+                            }
+                            else {
+                                score += 10;
+                            }
                             if(ballposX + 10 <= brickRect.x || ballposX + 1 >= brickRect.x + brickRect.width) {
                                 ballXdir = -ballXdir;
                             } else {
@@ -149,6 +169,38 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
             }
             if(ballposX > 670) {
                 ballXdir = -ballXdir;
+            }
+        }
+        if(ballposY > 570 || totalBricks <= 0) {
+            String addhighscore = "UPDATE brickplayerinfo SET highscore = ? WHERE username = '"+currentact+"'";
+            String addscore = "UPDATE brickplayerinfo SET currentscore = ? WHERE username = '"+currentact+"'";
+            String checkhscore = "SELECT highscore FROM brickplayerinfo WHERE username = '"+currentact+"'";
+            try {
+                ps = con.prepareStatement(checkhscore);
+                rs = ps.executeQuery();
+                
+                if(rs.next()) {
+                    highscore = rs.getInt("highscore");
+                    
+                    if(highscore <= score) { // adding the score if the recent score is higher than their previous high score
+                        ps = con.prepareStatement(addhighscore);
+                        ps.setInt(1, score);
+                        ps.executeUpdate();
+                        
+                    } else { // if the recent score is lower than the high score
+                        ps = con.prepareStatement(addscore);
+                        ps.setInt(1, score);
+                        ps.executeUpdate();
+                        
+                    }
+                } else {
+                    ps = con.prepareStatement(addscore);
+                    ps.setInt(1, score);
+                    ps.executeUpdate();
+                }
+            } 
+            catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, ex);
             }
         }
         

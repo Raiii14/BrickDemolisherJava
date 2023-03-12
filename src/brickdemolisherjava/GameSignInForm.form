@@ -64,7 +64,7 @@
                                   <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="password1" max="32767" attributes="0"/>
+                                      <Component id="confirmpass" max="32767" attributes="0"/>
                                       <Component id="jButton1" pref="118" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="0" pref="17" max="32767" attributes="0"/>
@@ -101,7 +101,7 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="password" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
                           <Component id="jLabel7" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
-                          <Component id="password1" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
+                          <Component id="confirmpass" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jLabel5" min="-2" pref="28" max="-2" attributes="0"/>
                   </Group>
@@ -159,7 +159,10 @@
             <Property name="text" type="java.lang.String" value="Confirm Password:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JPasswordField" name="password1">
+        <Component class="javax.swing.JPasswordField" name="confirmpass">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="confirmpassActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
