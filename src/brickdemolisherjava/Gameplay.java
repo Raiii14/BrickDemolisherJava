@@ -1,6 +1,5 @@
 package brickdemolisherjava;
 // These imports are needed for graphics and the JPanel for the Gameplay class to use
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -9,7 +8,6 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import javax.swing.JPanel;  
-import javax.swing.JButton;
 // These 4 imports are for the controls
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,6 +17,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
@@ -46,15 +45,20 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
     
     private MapGenerator map;
     
+    private JFrame obj;
     int highscore;
-    String currentact = GameLogInForm.currentact;
+    
+    String current = GameLogInForm.currentact;
+    
     Connection con= ConnectionForms.connectdb();
     PreparedStatement ps=null;
     ResultSet rs=null;
     
     Image img = Toolkit.getDefaultToolkit().createImage("Bdpics/bg1.png");
     
-    public Gameplay() {
+    public Gameplay(JFrame frame) {
+        this.obj = frame;
+        
         map = new MapGenerator(3, 7);
         addKeyListener(this);
         setFocusable(true);
@@ -172,9 +176,9 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
             }
         }
         if(ballposY > 570 || totalBricks <= 0) {
-            String addhighscore = "UPDATE brickplayerinfo SET highscore = ? currentscore = ? WHERE username = '"+currentact+"'";
-            String addscore = "UPDATE brickplayerinfo SET currentscore = ? WHERE username = '"+currentact+"'";
-            String checkhscore = "SELECT highscore FROM brickplayerinfo WHERE username = '"+currentact+"'";
+            String addhighscore = "UPDATE brickplayerinfo SET highscore = ? WHERE username = '"+current+"'";
+            String addscore = "UPDATE brickplayerinfo SET currentscore = ? WHERE username = '"+current+"'";
+            String checkhscore = "SELECT highscore FROM brickplayerinfo WHERE username = '"+current+"'";
             try {
                 ps = con.prepareStatement(checkhscore);
                 rs = ps.executeQuery();
@@ -185,7 +189,6 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
                     if(highscore <= score) { // adding the score if the recent score is higher than their previous high score
                         ps = con.prepareStatement(addhighscore);
                         ps.setInt(1, score);
-                        ps.setInt(2, score);
                         ps.executeUpdate();
                         
                     } else { // if the recent score is lower than the high score
@@ -232,7 +235,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
             }
         }
         // Difficulties
-        if(e.getKeyCode() == KeyEvent.VK_1) { // Restart, and Default/Normal difficulty
+        if(e.getKeyCode() == KeyEvent.VK_Q) { // Default/Normal difficulty
             if(!play) {
                 play = false;
                 ballXdir = -2;
@@ -240,7 +243,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
                 diff = "Normal";
             }
         }
-        if(e.getKeyCode() == KeyEvent.VK_2) {
+        if(e.getKeyCode() == KeyEvent.VK_W) {
             if(!play) {
                 play = false;
                 ballXdir = 5;
@@ -248,7 +251,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
                 diff = "Hard";
             }
         }
-        if(e.getKeyCode() == KeyEvent.VK_3) {
+        if(e.getKeyCode() == KeyEvent.VK_E) {
             if(!play) {
                 play = false;
                 ballXdir = 7;
@@ -280,13 +283,13 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
                 repaint();
             }
         }
-        if(e.getKeyCode() == KeyEvent.VK_L) {
+        if(e.getKeyCode() == KeyEvent.VK_TAB) {
             if(!play) {
                 new Leaderboard().setVisible(true);
             }
         }
         if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            setVisible(false);
+            obj.dispose();
             new GameMenu().setVisible(true);
         }
         
