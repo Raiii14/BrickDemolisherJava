@@ -94,7 +94,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
         // the score
         g.setColor(Color.white);
         g.setFont(new Font("sansserif", Font.BOLD, 23));
-        g.drawString(" " + score, 650, 29);
+        g.drawString(" " + score, 640, 29);
         if(ballposY > 570) {
             play = false;
             ballXdir = 0;
